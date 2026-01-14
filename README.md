@@ -1,73 +1,152 @@
-# Welcome to your Lovable project
+````md
+# ConceptSummarizer 🧠✨
 
-## Project info
+ConceptSummarizer is an AI-powered web app that transforms documents into:
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+- 📄 Clear, exam-ready summaries  
+- 🧩 Visual concept maps for fast understanding  
 
-## How can I edit this code?
+It supports **PDFs, PPT/PPTX, DOCX, and Images (PNG/JPG)** using a full-stack pipeline with file extraction, OCR, and AI processing.
 
-There are several ways of editing your application.
+Built as a real-world system:
+- React + Vite frontend  
+- Node.js + Express backend  
+- Async processing queue  
+- OCR + document parsing  
+- Cohere AI for summarization & concept mapping  
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🚀 Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- Upload multiple documents  
+- Automatic text extraction  
+  - PDF → `pdf-parse`  
+  - PPTX → slide XML parsing  
+  - DOCX → `mammoth`  
+  - Images → OCR with `tesseract.js`  
+- AI-generated:
+  - Detailed academic summaries  
+  - Concept maps (JSON → visual graph)  
+- Async background processing  
+- Clean, modern UI  
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Frontend
+- React (TypeScript)
+- Vite
+- Tailwind CSS
+- Framer Motion
 
-Follow these steps:
+### Backend
+- Node.js
+- Express
+- Multer (uploads)
+- In-memory queue (MVP)
+- Cohere AI
+- pdf-parse, jszip, mammoth, tesseract.js
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## ⚙️ Setup on a New Computer
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 1️⃣ Clone the repo
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+git clone https://github.com/maazzshaikh11/ConceptSummarizer.git
+cd ConceptSummarizer
+````
+
+---
+
+### 2️⃣ Backend setup
+
+```bash
+cd concept-weaver-backend
+npm install
+```
+
+Create `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```env
+PORT=4000
+COHERE_API_KEY=your_cohere_api_key_here
+MAX_FILE_SIZE=52428800
+```
+
+Start backend:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+You should see:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+Server listening on http://localhost:4000
+```
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 3️⃣ Frontend setup
 
-## What technologies are used for this project?
+Open a new terminal:
 
-This project is built with:
+```bash
+cd ConceptSummarizer
+npm install
+npm run dev
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+You’ll get a URL like:
 
-## How can I deploy this project?
+```
+http://localhost:5173
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Open it in your browser.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## 📐 Architecture
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+Frontend (React)
+      |
+      |  POST /api/upload
+      v
+Backend (Express)
+      |
+      |  Save file → Queue job
+      v
+Worker (in-memory)
+      |
+      |  Extract text (PDF/PPT/DOC/OCR)
+      |  → Cohere AI
+      v
+Summary + Concept Map
+      |
+      v
+Status API → Frontend renders result
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+## 🧪 Supported File Types
+
+* `.pdf`
+* `.ppt`, `.pptx`
+* `.docx`
+* `.png`, `.jpg`, `.jpeg`
+
+```
+
